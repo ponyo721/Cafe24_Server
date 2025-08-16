@@ -9,6 +9,13 @@ import java.util.logging.Logger;
 public class MainController {
     final static Logger logger = Logger.getLogger(MainController.class.getName());
 
+    @GetMapping("/")
+    public String enter() {
+        logger.info("call enter getMapping");
+
+        return "enter";
+    }
+
     @GetMapping("index")
     public String index() {
         logger.info("call Index getMapping");

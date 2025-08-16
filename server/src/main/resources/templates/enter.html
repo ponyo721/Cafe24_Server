@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>새벽 감성 - 24시 카페 | Enter</title>
+    <meta name="description" content="새벽에도 열려 있는 24시 카페/무인카페를 한 곳에서 찾아보세요."/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&family=Inter:wght@500;800&display=swap"
+          rel="stylesheet">
+    <style>
+        :root{
+          --bg: #0a0b10;
+          --bg-soft:#0e1018;
+          --text:#eaeaf0;
+          --muted:#9aa0aa;
+          --accent:#8b5cf6; /* purple */
+          --accent-2:#22d3ee; /* cyan */
+          --glow: rgba(139,92,246,0.55);
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+          margin:0; background: radial-gradient(1200px 800px at 80% -10%, rgba(34,211,238,.15), transparent 60%),
+          radial-gradient(1000px 600px at -20% 110%, rgba(139,92,246,.18), transparent 60%), var(--bg);
+          color:var(--text); font-family: 'Pretendard', 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Apple SD Gothic Neo, sans-serif;
+          overflow:hidden; /* lock to single screen */
+        }
+        .stars{position:fixed; inset:0; pointer-events:none;}
+        .stars span{position:absolute; width:2px; height:2px; background:rgba(255,255,255,.8); border-radius:50%; filter:drop-shadow(0 0 6px rgba(255,255,255,.8)); animation: twinkle linear infinite;}
+        @keyframes twinkle{ 50%{opacity:.3; transform:scale(.7)} }
+
+        .container{position:relative; height:100vh; display:grid; place-items:center;}
+        .card{
+          width:min(1040px, 92vw); min-height:68vh; border-radius:28px; padding:48px clamp(20px, 5vw, 64px);
+          background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02));
+          border:1px solid rgba(255,255,255,.08); box-shadow: 0 20px 80px rgba(0,0,0,.45), 0 0 80px rgba(139,92,246,.15);
+          display:grid; grid-template-columns:1.2fr .8fr; gap:32px; align-items:center;
+          backdrop-filter: blur(10px);
+        }
+        @media (max-width:960px){ .card{grid-template-columns:1fr; min-height:auto; gap:24px; padding:36px 24px} }
+
+        .brand{display:flex; align-items:center; gap:12px}
+        .logo{width:42px; height:42px; border-radius:12px; background: linear-gradient(135deg, var(--accent), var(--accent-2));
+          box-shadow:0 0 24px var(--glow);
+          display:grid; place-items:center; font-weight:800; letter-spacing:1px;}
+        .logo svg{width:26px; height:26px; fill:white}
+        .brand h1{margin:0; font-size:clamp(22px,2.6vw,32px); font-weight:800;}
+
+        .kicker{display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--muted);
+          border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02)}
+        .kicker .dot{width:6px; height:6px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 0 12px var(--glow)}
+
+        .title{margin:16px 0 8px; font-size:clamp(30px,6vw,64px); line-height:1.05; font-weight:800; letter-spacing:-.5px;}
+        .title .grad{background: linear-gradient(135deg, #ffffff 20%, #c7b8ff 45%, #b1f5ff 80%); -webkit-background-clip:text; background-clip:text; color:transparent;}
+        .subtitle{margin:0 0 18px; font-size:clamp(14px,2.2vw,18px); color:var(--muted)}
+
+        .chips{display:flex; flex-wrap:wrap; gap:10px; margin:22px 0 28px}
+        .chip{padding:8px 12px; border-radius:999px; font-size:13px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.03)}
+
+        .actions{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+        .btn{
+          appearance:none; border:0; padding:14px 20px; border-radius:14px; font-weight:700; font-size:15px; cursor:pointer;
+          transition: transform .08s ease, box-shadow .2s ease, background .2s ease; display:inline-flex; align-items:center; gap:10px;
+        }
+        .btn-primary{ background: linear-gradient(135deg, var(--accent), var(--accent-2)); color:#0b1020; box-shadow:0 10px 30px rgba(139,92,246,.35), inset 0 0 0 1px rgba(255,255,255,.25)}
+        .btn-primary:hover{ transform: translateY(-1px); box-shadow:0 14px 40px rgba(139,92,246,.45) }
+        .btn-ghost{ background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.12)}
+        .btn-ghost:hover{ background:rgba(255,255,255,.05) }
+
+        .right{
+          position:relative; height:100%; min-height:360px; border-radius:22px; overflow:hidden; background: radial-gradient(800px 480px at 60% -10%, rgba(34,211,238,.2), transparent 60%),
+            linear-gradient(180deg, #0b0e17, #09101b);
+          border:1px solid rgba(255,255,255,.08);
+        }
+        .right .badge{position:absolute; top:16px; right:16px; padding:8px 12px; border-radius:999px; font-size:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:#d8e4ff}
+        .right .clock{position:absolute; bottom:18px; right:18px; font-variant-numeric: tabular-nums; color:#a7b0c0; font-size:14px}
+
+        .scene{position:absolute; inset:0; display:grid; place-items:center}
+        .scene svg{width:86%; max-width:520px; filter: drop-shadow(0 20px 60px rgba(0,0,0,.5)) drop-shadow(0 0 30px rgba(139,92,246,.25));}
+
+        .footer{position:fixed; bottom:16px; left:50%; transform:translateX(-50%); width:min(1040px,92vw); display:flex; justify-content:space-between; align-items:center; gap:10px; color:var(--muted); font-size:12px}
+        .footer a{color:inherit; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.2)}
+
+        /* Accessibility */
+        .skip{position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden}
+        .skip:focus{position:static; width:auto; height:auto; margin:10px}
+    </style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<div class="stars" aria-hidden="true" id="stars"></div>
+
+<div class="container">
+    <main class="card" id="main" aria-labelledby="title">
+        <section>
+            <div class="brand" aria-label="브랜드">
+                <div class="logo" aria-hidden="true" title="24H">
+                    <svg viewBox="0 0 24 24" role="img" aria-label="logo">
+                        <path d="M6 3h12a2 2 0 0 1 2 2v9a5 5 0 0 1-5 5H9A5 5 0 0 1 4 14V5a2 2 0 0 1 2-2Zm10.5 4h1.5a2 2 0 1 1 0 4H16v2a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V7h10.5Zm0 2V9h1.5a1 1 0 0 0 0-2H16.5Z"/>
+                    </svg>
+                </div>
+                <h1>새벽 감성 · 24시 카페</h1>
+            </div>
+            <div class="kicker"><span class="dot"></span> 밤에도 열려요</div>
+            <h3 id="title" class="title">#새벽인데 <span class="grad">커피</span> 땡기네</h3>
+            <p class="subtitle">24시 운영 카페와 무인카페를 한 곳에서 빠르게 찾을 수 있어요.</p>
+
+            <div class="chips" aria-label="해시태그">
+                <span class="chip">#새벽감성</span>
+                <span class="chip">#24시카페</span>
+                <span class="chip">#무인카페</span>
+                <span class="chip">#밤샘카공</span>
+                <span class="chip">#야간산책</span>
+                <span class="chip">#프랜차이즈</span>
+            </div>
+
+            <div class="actions">
+                <a class="btn btn-primary" href="/" id="enterBtn" aria-label="서비스 입장하기">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 3l-1.41 1.41L16.17 10H3v2h13.17l-5.58 5.59L12 19l8-8z"/>
+                    </svg>
+                    입장하기
+                </a>
+                <a class="btn btn-ghost" href="#info">서비스 소개</a>
+            </div>
+        </section>
+
+        <aside class="right" aria-label="미리보기">
+            <div class="badge">24/7 OPEN</div>
+            <div class="scene" aria-hidden="true">
+                <!-- Minimal neon café illustration -->
+                <svg viewBox="0 0 800 600" role="img" aria-label="네온 카페 일러스트">
+                    <defs>
+                        <linearGradient id="g1" x1="0" x2="1">
+                            <stop offset="0%" stop-color="#8b5cf6"/>
+                            <stop offset="100%" stop-color="#22d3ee"/>
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="4" result="b"/>
+                            <feMerge>
+                                <feMergeNode in="b"/>
+                                <feMergeNode in="b"/>
+                                <feMergeNode in="b"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <rect x="40" y="120" width="720" height="360" rx="18" fill="#0b0e17" stroke="#273043"/>
+                    <g filter="url(#glow)">
+                        <rect x="100" y="160" width="220" height="220" rx="10" stroke="url(#g1)" fill="transparent"
+                              stroke-width="3"/>
+                        <rect x="360" y="160" width="320" height="220" rx="10" stroke="url(#g1)" fill="transparent"
+                              stroke-width="3"/>
+                        <circle cx="210" cy="270" r="48" stroke="url(#g1)" fill="transparent" stroke-width="3"/>
+                        <rect x="420" y="200" width="200" height="60" rx="8" stroke="url(#g1)" fill="transparent"
+                              stroke-width="3"/>
+                        <rect x="420" y="280" width="200" height="60" rx="8" stroke="url(#g1)" fill="transparent"
+                              stroke-width="3"/>
+                    </g>
+                    <text x="410" y="380" font-size="24" fill="#a9b7d0">NEON CAFE</text>
+                    <text x="410" y="410" font-size="16" fill="#647089">24 HOURS</text>
+                </svg>
+            </div>
+            <div class="clock" aria-live="polite">—:—</div>
+        </aside>
+    </main>
+</div>
+
+<footer class="footer" id="info">
+    <div>
+        <strong>이런 분들을 위한 서비스</strong> · 새벽에 조용히 커피 마시고 싶을 때 · 눈치 보지 않고 카공하고 싶을 때 · 매장 분위기를 선호할 때
+    </div>
+    <div>
+        <a href="mailto:lbw3973@gmail.com">lbw3973@gmail.com</a>
+        ·
+        <a href="mailto:sylee8048@gmail.com">sylee8048@gmail.com</a>
+        · <a href="#" aria-label="제보하기">제보하기</a>
+    </div>
+</footer>
+
+<script>
+    // Simple star field
+    (function(){
+      const wrap = document.getElementById('stars');
+      const count = Math.min(140, Math.floor(window.innerWidth/8));
+      for(let i=0;i<count;i++){
+        const s = document.createElement('span');
+        const x = Math.random()*100, y=Math.random()*100;
+        const d = 4000 + Math.random()*6000;
+        s.style.left = x+'%'; s.style.top = y+'%';
+        s.style.animationDuration = d+'ms';
+        wrap.appendChild(s);
+      }
+    })();
+
+    // Clock (local time)
+    const clock = document.querySelector('.clock');
+    function tick(){
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2,'0');
+      const mm = String(now.getMinutes()).padStart(2,'0');
+      clock.textContent = `${hh}:${mm}`;
+    }
+    tick(); setInterval(tick, 1000*15);
+
+    // Smooth scroll for intro link
+    document.querySelector('a[href="#info"]').addEventListener('click', (e)=>{
+      e.preventDefault(); document.getElementById('info').scrollIntoView({behavior:'smooth'});
+    });
+
+    // If you have an app route, change '/' below to your main path (e.g., '/home').
+    document.getElementById('enterBtn').addEventListener('click', (e)=>{
+      // Optional: add small interaction
+      e.currentTarget.style.transform = 'translateY(-1px) scale(0.995)';
+      setTimeout(()=>{ e.currentTarget.style.transform = ''; }, 120);
+    });
+</script>
+</body>
+</html>
