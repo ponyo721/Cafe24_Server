@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input {
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<h2>회원가입</h2>
+<form action="/signup" method="post" id="signupForm">
+    <label for="username">아이디</label>
+    <input type="text" id="username" name="username" required>
+    <div class="error" id="usernameError"></div>
+
+    <label for="password">비밀번호</label>
+    <input type="password" id="password" name="password" required>
+    <div class="error" id="passwordError"></div>
+
+    <label for="email">이메일</label>
+    <input type="email" id="email" name="email" required>
+    <div class="error" id="emailError"></div>
+
+    <button type="submit">가입하기</button>
+</form>
+
+<script>
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', function(event) {
+        // HTML5 기본 validation 사용
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const email = document.getElementById('email');
+
+        document.getElementById('usernameError').textContent = '';
+        document.getElementById('passwordError').textContent = '';
+        document.getElementById('emailError').textContent = '';
+
+        let valid = true;
+
+        if (!username.value.trim()) {
+            document.getElementById('usernameError').textContent = '아이디를 입력해주세요';
+            valid = false;
+        }
+
+        if (!password.value.trim()) {
+            document.getElementById('passwordError').textContent = '비밀번호를 입력해주세요';
+            valid = false;
+        }
+
+        if (!email.value.trim()) {
+            document.getElementById('emailError').textContent = '이메일을 입력해주세요';
+            valid = false;
+        } else {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email.value)) {
+                document.getElementById('emailError').textContent = '이메일 형식이 올바르지 않습니다';
+                valid = false;
+            }
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+</script>
+</body>
+</html>

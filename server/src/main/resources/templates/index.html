@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>회원가입</title>
 </head>
 <body>
-<p>Hello, World!</p>
+<h1>회원가입</h1>
+<form id="signupForm">
+    <label>아이디: <input type="text" name="username"></label><br>
+    <label>비밀번호: <input type="password" name="password"></label><br>
+    <label>이메일: <input type="email" name="email"></label><br>
+    <button type="submit">가입</button>
+</form>
+
+<script>
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = {
+            username: form.username.value,
+            password: form.password.value,
+            email: form.email.value
+        };
+
+        const res = await fetch('/api/signup', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        });
+
+        const text = await res.text();
+        alert(text);
+    });
+</script>
 </body>
 </html>
