@@ -1,6 +1,8 @@
 package com.cafe24.server.controller;
 
+import com.cafe24.server.domain.user.User;
 import com.cafe24.server.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +23,15 @@ public class UserController {
 
     // 회원가입 처리
     @PostMapping("/register")
-    @ResponseBody
-    public String register(@RequestParam String username,
-                           @RequestParam String email,
-                           @RequestParam String password) {
-        userService.register(username, email, password);
-        return "회원가입 성공!";
+    public ResponseEntity<?> register(@RequestParam String username,
+                                      @RequestParam String password,
+                                      @RequestParam String email) {
+        try {
+            User savedUser = userService.registerUser(username, password, email);
+            return ResponseEntity.ok("회원가입 성공: " + savedUser.getUsername());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("회원가입 실패: " + e.getMessage());
+        }
     }
 
     // 로그인 처리

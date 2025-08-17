@@ -6,11 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.Assertions;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
-//@Transactional
+@Transactional
 class UserServiceTest {
 
     @Autowired
@@ -42,5 +43,30 @@ class UserServiceTest {
 
         User lockedUser = userRepository.findByUsername("lockUser").orElseThrow();
         assertThat(lockedUser.isLocked()).isTrue();
+    }
+
+    @Test
+    void testRegisterUser_Success() {
+        User user = userService.registerUser("testuser", "password123", "test@example.com");
+        Assertions.assertNotNull(user.getId());
+        Assertions.assertEquals("testuser", user.getUsername());
+    }
+
+    @Test
+    void testRegisterUser_DuplicateUsername() {
+        userService.registerUser("duplicate", "pass", "dup1@example.com");
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            userService.registerUser("duplicate", "pass2", "dup2@example.com");
+        });
+    }
+
+    @Test
+    void testRegisterUser_DuplicateEmail() {
+        userService.registerUser("unique1", "pass", "same@example.com");
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            userService.registerUser("unique2", "pass2", "same@example.com");
+        });
     }
 }

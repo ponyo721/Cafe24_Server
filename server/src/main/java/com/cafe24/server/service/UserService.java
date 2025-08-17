@@ -2,6 +2,7 @@ package com.cafe24.server.service;
 
 import com.cafe24.server.domain.user.User;
 import com.cafe24.server.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
+//@RequiredArgsConstructor
 @Transactional
 public class UserService {
 
@@ -17,6 +19,25 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public User registerUser(String username, String password, String email) {
+        String hashed = passwordEncoder.encode(password);
+
+        if (userRepository.existsByUsername(username)) {
+            throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
+        }
+
+        if (userRepository.existsByEmail(email)) {
+            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPasswordHash(hashed);
+        user.setEmail(email);
+
+        return userRepository.save(user);
     }
 
     // 회원가입
