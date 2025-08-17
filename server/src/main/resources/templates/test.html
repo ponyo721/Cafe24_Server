@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>새벽감성 카페</title>
+    <style>
+        body {
+          margin: 0;
+          background-color: #0f0f1a;
+          color: #fff;
+          font-family: 'Noto Sans KR', sans-serif;
+        }
+        .hero {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          text-align: center;
+          padding: 20px;
+        }
+        .hero h1 {
+          font-size: 3rem;
+          margin: 0.5em 0;
+          white-space: nowrap; /* 줄바꿈 방지 */
+        }
+        .button-group {
+          margin-top: 20px;
+          display: flex;
+          gap: 16px;
+        }
+        .btn {
+          padding: 12px 24px;
+          font-size: 1rem;
+          border: none;
+          cursor: pointer;
+          border-radius: 4px;
+          transition: background 0.3s ease;
+        }
+        .btn-primary {
+          background: linear-gradient(135deg, #8e54e9, #4776e6);
+          color: #fff;
+        }
+        .btn-primary:hover {
+          background: linear-gradient(135deg, #7a42d2, #3f65cd);
+        }
+        .btn-secondary {
+          background: transparent;
+          color: #fff;
+          border: 2px solid #fff;
+        }
+        .btn-secondary:hover {
+          background: rgba(255, 255, 255, 0.2);
+        }
+        .map-section {
+          padding: 40px 20px;
+          text-align: center;
+        }
+        .map-container {
+          width: 100%;
+          max-width: 600px;
+          height: 400px;
+          margin: 0 auto;
+          border: 2px solid #444;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+        .map-container iframe {
+          width: 100%;
+          height: 100%;
+          border: 0;
+        }
+        @media (max-width: 600px) {
+          .hero h1 {
+            font-size: 2rem;
+          }
+          .button-group {
+            flex-direction: column;
+            gap: 8px;
+          }
+        }
+    </style>
+</head>
+<body>
+<div class="hero">
+    <h1>#새벽인데 커피 땡기네</h1>
+    <div class="button-group">
+        <button class="btn btn-primary">입장하기</button>
+        <button class="btn btn-secondary">서비스 소개</button>
+    </div>
+</div>
+
+<div class="map-section">
+    <h2>매장 위치 안내</h2>
+    <div class="map-container">
+        <!-- 실제 지도 API 코드로 대체 가능 -->
+        <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.123456789012!2d127.123456789!3d37.123456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xabcdef0123456789%3A0xabcdef0123456789!2sYour+Cafe+Location!5e0!3m2!1sko!2skr!4v1590000000000!5m2!1sko!2skr"
+                allowfullscreen=""
+                loading="lazy"
+        ></iframe>
+    </div>
+</div>
+</body>
+</html>

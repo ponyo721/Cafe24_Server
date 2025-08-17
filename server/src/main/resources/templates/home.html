@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - 새벽 감성</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=YOUR_CLIENT_ID"></script>
+    <style>
+        body {
+          margin: 0;
+          font-family: 'Noto Sans KR', sans-serif;
+          background: #0d0d16;
+          color: #fff;
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+          overflow: hidden;
+        }
+
+        /* 상단 메뉴 */
+        header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px 40px;
+          background: rgba(15, 15, 30, 0.9);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .logo {
+          font-size: 22px;
+          font-weight: bold;
+          color: #7dd3fc;
+        }
+        nav {
+          display: flex;
+          gap: 20px;
+        }
+        nav a {
+          text-decoration: none;
+          color: #bbb;
+          font-size: 15px;
+          transition: 0.3s;
+        }
+        nav a:hover {
+          color: #7dd3fc;
+        }
+
+        /* 메인 영역 */
+        .main {
+          display: flex;
+          flex: 1;
+          overflow: hidden;
+        }
+
+        /* 왼쪽 - 회원가입 폼 */
+        .form-container {
+          width: 400px;
+          background: rgba(20, 20, 35, 0.95);
+          padding: 40px;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+        }
+        .form-container h2 {
+          margin-bottom: 20px;
+          font-size: 24px;
+          background: linear-gradient(to right, #7dd3fc, #a78bfa, #f472b6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .form-container label {
+          margin: 10px 0 5px;
+          font-size: 14px;
+          color: #ccc;
+        }
+        .form-container input {
+          padding: 12px;
+          border: none;
+          border-radius: 8px;
+          margin-bottom: 15px;
+          background: #1c1c2b;
+          color: #fff;
+          font-size: 14px;
+        }
+        .form-container input:focus {
+          outline: 2px solid #7dd3fc;
+        }
+        .form-container button {
+          background: linear-gradient(90deg, #7dd3fc, #a78bfa, #f472b6);
+          border: none;
+          border-radius: 8px;
+          padding: 14px;
+          font-size: 16px;
+          font-weight: bold;
+          color: #fff;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+        .form-container button:hover {
+          opacity: 0.85;
+        }
+
+        /* 오른쪽 - 지도 */
+        #map {
+          flex: 1;
+        }
+
+        /* 제보하기 버튼 */
+        .report-btn {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          background: linear-gradient(90deg, #7dd3fc, #a78bfa);
+          color: white;
+          border: none;
+          padding: 12px 20px;
+          border-radius: 25px;
+          cursor: pointer;
+          font-size: 14px;
+          box-shadow: 0 0 15px rgba(125, 211, 252, 0.6);
+        }
+    </style>
+</head>
+<body>
+<!-- 상단 메뉴 -->
+<header>
+    <div class="logo">🌙 새벽 감성</div>
+    <nav>
+        <a href="#">전체</a>
+        <a href="#">일반카페</a>
+        <a href="#">무인카페</a>
+        <a href="#">즐겨찾기</a>
+        <a href="#">로그인</a>
+    </nav>
+</header>
+
+<!-- 메인 -->
+<div class="main">
+    <!-- 회원가입 폼 -->
+    <div class="form-container">
+        <h2>회원가입</h2>
+        <form action="/signup" method="post">
+            <label for="username">아이디</label>
+            <input type="text" id="username" name="username" required placeholder="아이디를 입력해주세요">
+
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" required placeholder="비밀번호를 입력해주세요">
+
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="email" required placeholder="이메일을 입력해주세요">
+
+            <button type="submit">가입하기</button>
+        </form>
+    </div>
+
+    <!-- 지도 -->
+    <div id="map"></div>
+    <button class="report-btn">제보하기</button>
+</div>
+
+<script>
+    // 네이버 지도 초기화
+    var map = new naver.maps.Map('map', {
+      center: new naver.maps.LatLng(37.497, 127.027), // 강남역 좌표
+      zoom: 13
+    });
+
+    // 샘플 마커
+    var marker = new naver.maps.Marker({
+      position: new naver.maps.LatLng(37.497, 127.027),
+      map: map,
+      title: "카페 새벽 감성 강남점"
+    });
+</script>
+</body>
+</html>

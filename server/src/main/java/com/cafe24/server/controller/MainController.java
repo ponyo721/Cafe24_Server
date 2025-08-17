@@ -16,10 +16,31 @@ public class MainController {
         return "enter";
     }
 
+    @GetMapping("/home")
+    public String home() {
+        logger.info("call home getMapping");
+
+        return "home";
+    }
+
     @GetMapping("index")
     public String index() {
         logger.info("call Index getMapping");
 
         return "index";
+    }
+
+    @GetMapping("info")
+    public String info() {
+        logger.info("call info getMapping");
+
+        return "info";
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        logger.info("call test getMapping");
+
+        return "test";
     }
 }
